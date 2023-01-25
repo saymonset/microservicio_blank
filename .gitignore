@@ -1,0 +1,79 @@
+/.metadata/
+/.metadata/
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/logininterfell/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+*.iml
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+
+/target/
+.project
+.classpath
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+/bin/
+.idea/
+/ingesta-web-fuentes_ws/ingesta-servicio-antivirus/target
+/ingesta-web-fuentes_ws/ingesta-servicio-mq/target
+/ingesta-web-fuentes_ws/ingesta-servicio-mq/target
+
+.classpath
+.project
+.settings/
+/target/
+*/target/**
+/logs/
+.log
+*.class
+
+*.gz
