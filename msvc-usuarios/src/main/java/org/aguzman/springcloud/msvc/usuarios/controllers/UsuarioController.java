@@ -82,6 +82,15 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
+
+    @GetMapping("/usuarios-por-curso")
+    //Si fuera por @RequestBody el json que llega del cliente, debe ser enviado tipo post
+    //Si es con el erbo tipo @Get, debes pasar los datos por @RequestParam
+    public ResponseEntity<?> alumnsPorCurso(@RequestParam List<Long> ids){
+        return ResponseEntity.ok(this.s.listarPorIds(ids));
+
+    }
+
 //    Se mueve el bloque con
     //ctrl + shift + flecha
     private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
