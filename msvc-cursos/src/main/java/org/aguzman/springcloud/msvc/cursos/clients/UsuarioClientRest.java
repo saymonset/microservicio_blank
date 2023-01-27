@@ -22,4 +22,9 @@ public interface UsuarioClientRest {
     //Si fuera por @RequestBody el json que llega del cliente, debe ser enviado tipo post
     //Si es con el erbo tipo @Get, debes pasar los datos por @RequestParam
     List<Usuario> alumnosPorCurso(@RequestParam Iterable<Long> ids);
+
+    @GetMapping("/usuarios-por-curso-borrar")
+        //Si fuera por @RequestBody el json que llega del cliente, debe ser enviado tipo post
+        //Si es con el erbo tipo @Get, debes pasar los datos por @RequestParam
+    List<Usuario> alumnosPorCursoBorraEjemplo(@RequestParam Iterable<Long> ids);
 }
