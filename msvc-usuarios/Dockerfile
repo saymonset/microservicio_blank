@@ -32,6 +32,14 @@ RUN ./mvnw clean package -DskipTests
 #Aqui se llama nuevamente para ejecutar
 FROM openjdk:18.0
 WORKDIR /app
+#Al correr  esta segunda imagen del builder, creamos esta carpeta logs en la carpeta de
+#trabajo app
+RUN mkdir ./logs
+#Para sacar los logs a nuestro equipo es: \
+    #./logs se refiere a nuestro equipo en el directorio donde estemps parados y crea la \
+#    carpeta logs
+docker cp nombreContenedor:/app/logs .\logs
+
 #copiamos el msvc-usuarios-0.0.1-SNAPSHOT.jar de builder a la nueva capa de openjdk del workdir que es app
 COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 EXPOSE 8001
@@ -53,6 +61,7 @@ CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 #docker st
 
 #Con este comando, copiamos el pom.xml de la raiz y el mcsv-usuarios con su pom.xml t mvnw para compilarlos internamente en docker
+#el -t es tag que es etiquetar
 # docker build -t usuarios . -f ./msvc-usuarios/Dockerfile
 
 # prune       Remove all stopped containers
@@ -64,4 +73,11 @@ CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 #docker run -p 8001:8002 -d --rm usuarios
 #Ejecutar algo en la shell del contenedor apenas se crea
 #docker run -p 8001:8002 -d --rm usuarios -it /bin/sh
+
+#Para pasar un archivo x al contenedor de la carpeta de trabajao
+#  docker cp  ./Login.java nombreContenedorCorriendo:/app/Login.java
+
+#Para pasar un archivo x del contenedor a nuestra maquina
+#  docker cp  nombreContenedorCorriendo:/app/Login.java .\Login.java
+#  docker cp  nombreContenedorCorriendo:/app .\test
 
