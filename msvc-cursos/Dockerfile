@@ -86,13 +86,28 @@ CMD ["java", "-jar" , "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 #docker network  create spring
 
 #Postgres
-#docker run -d -p 5433:5432 --name postgres14 --network spring -e POSTGRES_PASSWORD=123456 -e POSTGRES_DATABASE=msvc_cursos postgres:14-alpine
+# Guardamos los datos de postgres en un volumen, y con restart iniciamos la bd cada ves que este apagada
+#docker run --name postgresql -itd --restart always \
+#  --env 'DB_USER=dbuser' --env 'DB_PASS=dbuserpass' \
+#  sameersbn/postgresql:12-20200524
+#docker run -d -p 5433:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=msvc_cursos -v data-postgres:/var/lib/postgresql/data --restart=always --name postgres14 --network spring  postgres:14-alpine
+
 
 #Entrar en bd
 # docker exec -it postgres14 bash
 
-#Para crear el microservicio, se entro a la shell de postgres y se creo la bd;
-#create databse msvc_cursos
+#entramos a bd
+# psql -Upostgres
+
+#Listar todas las bd
+#\l
+
+#Seleccionar una bd
+#\c msvc_cursos;
+
+#listar tables
+#\dt
+#\d+   Describe una table
 
 #Creamos el; microservicio
 #docker run -p 8002:8002 -d --rm --name msvc-cursos --network spring cursos:latest

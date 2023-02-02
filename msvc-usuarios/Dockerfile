@@ -97,4 +97,5 @@ CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 #docker run -p 8001:8001 -d --rm --name msvc-usuarios --network spring usuarios:latest
 
 #MYSQL
-#docker run -d -p 3308:3306 --name mysql8  --network spring -e MYSQL_USER=ecological -e MYSQL_PASSWORD=ecological -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=MSVC_USUARIOS mysql:8
+# Guardamos los datos de mysql en un volumen, y con restart iniciamos la bd cada ves que este apagada
+#docker run -d -p 3308:3306 --name mysql8 -v data-mysql:/var/lib/mysql  --restart=always --network spring -e MYSQL_USER=ecological -e MYSQL_PASSWORD=ecological -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=MSVC_USUARIOS mysql:8
