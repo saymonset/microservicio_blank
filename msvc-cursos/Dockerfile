@@ -6,23 +6,23 @@ FROM openjdk:18.0 as builder
 #Carpeta de trabajo de nuestra imagen
 #El pom principal va en app
 #en msvc-usuario va el pom de msvc-usuario  y resto de fuentes sin target
-WORKDIR /app/msvc-usuarios
+WORKDIR /app/msvc-cursos
 
 #Vamos a compilar yempaquetar dentro de docker  con maven
 #Copiamos el pom parent a app
 COPY ./pom.xml /app
 #Bajamos toda las liobrerias de mvn para optimizqar la capa que sea una de las primeras y
 # a la hora de cambiar fuentes del src, no bajar nuevamente las dependencias de maven porque estan en chqache por una capa anterior
-#Copiamos los fuentes a la ruta /app/msvc-usuarios con el punto que es el area de trabajo
-COPY ./msvc-usuarios/.mvn ./.mvn
-COPY ./msvc-usuarios/mvnw .
-COPY ./msvc-usuarios/pom.xml .
+#Copiamos los fuentes a la ruta /app/msvc-cursos con el punto que es el area de trabajo
+COPY ./msvc-cursos/.mvn ./.mvn
+COPY ./msvc-cursos/mvnw .
+COPY ./msvc-cursos/pom.xml .
 
 #saltamos el test y main carpeta de maven. saltamos el reempaquetado de spring y borramos la carpeta target
 #RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot-repackage.skip && rm -r ./target/
 RUN ./mvnw dependency:go-offline
-#Ahora si copiamos todo el codigo fuente en WORKDIR /app/msvc-usuarios/src
-COPY ./msvc-usuarios/src ./src
+#Ahora si copiamos todo el codigo fuente en WORKDIR /app/msvc-cursos/src
+COPY ./msvc-cursos/src ./src
 RUN ./mvnw clean package -DskipTests
 
 
@@ -40,19 +40,19 @@ RUN mkdir ./logs
 #    carpeta logs
 #docker cp nombreContenedor:/app/logs .\logs
 
-#copiamos el msvc-usuarios-0.0.1-SNAPSHOT.jar de builder a la nueva capa de openjdk del workdir que es app
-COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
-EXPOSE 8001
-#El msvc-usuarios-0.0.1-SNAPSHOT.jar esta en la raiz, esta en app
-#ENTRYPOINT ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
+#copiamos el msvc-cursos-0.0.1-SNAPSHOT.jar de builder a la nueva capa de openjdk del workdir que es app
+COPY --from=builder /app/msvc-cursos/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
+EXPOSE 8002
+#El msvc-cursos-0.0.1-SNAPSHOT.jar esta en la raiz, esta en app
+#ENTRYPOINT ["java", "-jar" , "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 
 #CMD es menos estricto y se puede sobreescribir al crear el contenedor con linea de comando
-#como por ejemplo: docker run -p 8001:8002 -d --rm usuarios -it /bin/sh
+#como por ejemplo: docker run -p 8001:8002 -d --rm cursos -it /bin/sh
 #Entramos a /bin/sh
-CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar" , "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 #Cuando ejecutamos un contenedor, vamos a un punto de entrada para ejecutar un comando
-# /app/msvc-usuarios con el punto que es el area de trabajo
-#ENTRYPOINT ["java", "-jar" , "./target/msvc-usuarios-0.0.1-SNAPSHOT.jar"]
+# /app/msvc-cursos con el punto que es el area de trabajo
+#ENTRYPOINT ["java", "-jar" , "./target/msvc-cursos-0.0.1-SNAPSHOT.jar"]
 
 
 #Puerto exterior el primero 8002
@@ -60,25 +60,19 @@ CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 # docker run -p 8002:8001 image#
 #docker st
 
-#Con este comando, copiamos el pom.xml de la raiz y el mcsv-usuarios con su pom.xml t mvnw para compilarlos internamente en docker
+#Con este comando, copiamos el pom.xml de la raiz y el mcsv-cursos con su pom.xml t mvnw para compilarlos internamente en docker
 #el -t es tag que es etiquetar
-
-#Creamos la imagen
-# docker build -t usuarios:latest . -f ./msvc-usuarios/Dockerfile
-
-
+# docker build -t cursos . -f ./msvc-cursos/Dockerfile
+# docker build -t cursos:latest . -f ./msvc-cursos/Dockerfile
 # prune       Remove all stopped containers
 #Docker container prune
 #docker container --help
-
 # Remove unused images
 #docker image prune
-
 #Con rm si logras parar el contenedor, se auto elimina
-#docker run -p 8001:8002 -d --rm usuarios
-
+#docker run -p 8001:8002 -d --rm cursos
 #Ejecutar algo en la shell del contenedor apenas se crea
-#docker run -p 8001:8002 -d --rm usuarios -it /bin/sh
+#docker run -p 8001:8002 -d --rm cursos -it /bin/sh
 
 #Para pasar un archivo x al contenedor de la carpeta de trabajao
 #  docker cp  ./Login.java nombreContenedorCorriendo:/app/Login.java
@@ -87,14 +81,18 @@ CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 #  docker cp  nombreContenedorCorriendo:/app/Login.java .\Login.java
 #  docker cp  nombreContenedorCorriendo:/app .\test
 
-#Ver ayuda de las redesde en docker
 #docker network --help
-
 #creamos la red
 #docker network  create spring
 
-#Creamos el; microservico
-#docker run -p 8001:8001 -d --rm --name msvc-usuarios --network spring usuarios:latest
+#Postgres
+#docker run -d -p 5433:5432 --name postgres14 --network spring -e POSTGRES_PASSWORD=123456 -e POSTGRES_DATABASE=msvc_cursos postgres:14-alpine
 
-#MYSQL
-#docker run -d -p 3308:3306 --name mysql8  --network spring -e MYSQL_USER=ecological -e MYSQL_PASSWORD=ecological -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=MSVC_USUARIOS mysql:8
+#Entrar en bd
+# docker exec -it postgres14 bash
+
+#Para crear el microservicio, se entro a la shell de postgres y se creo la bd;
+#create databse msvc_cursos
+
+#Creamos el; microservicio
+#docker run -p 8002:8002 -d --rm --name msvc-cursos --network spring cursos:latest

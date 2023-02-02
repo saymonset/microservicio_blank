@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 //        #1.1-) spring.datasource.url=jdbc:mysql://host.docker.internal:3307/msvc_usuarios?serverTimezone=America/Caracas&allowPublicKeyRetrieval=false
 //        #1.2-) y se vuelve a generar el compilado con mvn de esta manera
 //        #1.3-) ./mvnw clean package -DskipTests
-@FeignClient(name = "msvc-cursos",url = "http://host.docker.internal:8002")
+//Este es el nombre del contenedor que es el mismo nombre de red para cominicarnos
+@FeignClient(name = "msvc-cursos",url = "msvc-cursos:8002")
 public interface CursoClienteRest {
     @DeleteMapping("/eliminar-usuariofrom/{id}")
     void eliminarUsuario(@PathVariable Long id);
