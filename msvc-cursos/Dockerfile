@@ -92,6 +92,9 @@ CMD ["java", "-jar" , "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 #  sameersbn/postgresql:12-20200524
 #docker run -d -p 5433:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=msvc_cursos -v data-postgres:/var/lib/postgresql/data --restart=always --name postgres14 --network spring  postgres:14-alpine
 
+# Como entrar en el bash de mysql ,
+ #postgres en docker y tener una ;lista de comandos de cada uno de ellos
+# Seccion 9 -> 78
 
 #Entrar en bd
 # docker exec -it postgres14 bash
