@@ -1,7 +1,14 @@
+#Definimos una variable de ambiente argumento
+#Los argumentos se usan para la construccion de la imagen
+ARG MSVC_NAME=msvc-usuarios
+
 #Esta imagen de java debe ser  la misma version que se tiene instalada en la mauina y enb el ide
 #Usamos el patron de diseno builder que es tener la primera instalarcion del jdk y la usamos nuevamente mas
 #abajo llamandola nuevamente pero solo para ejecutar
 FROM openjdk:18.0 as builder
+
+#declaramos en esta capa la variable de argumento declarada arriba
+ARG MSVC_NAME
 
 #Carpeta de trabajo de nuestra imagen
 #El pom principal va en app
@@ -14,15 +21,15 @@ COPY ./pom.xml /app
 #Bajamos toda las liobrerias de mvn para optimizqar la capa que sea una de las primeras y
 # a la hora de cambiar fuentes del src, no bajar nuevamente las dependencias de maven porque estan en chqache por una capa anterior
 #Copiamos los fuentes a la ruta /app/msvc-usuarios con el punto que es el area de trabajo
-COPY ./msvc-usuarios/.mvn ./.mvn
-COPY ./msvc-usuarios/mvnw .
-COPY ./msvc-usuarios/pom.xml .
+COPY ./$MSVC_NAME/.mvn ./.mvn
+COPY ./$MSVC_NAME/mvnw .
+COPY ./$MSVC_NAME/pom.xml .
 
 #saltamos el test y main carpeta de maven. saltamos el reempaquetado de spring y borramos la carpeta target
 #RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot-repackage.skip && rm -r ./target/
 RUN ./mvnw dependency:go-offline
 #Ahora si copiamos todo el codigo fuente en WORKDIR /app/msvc-usuarios/src
-COPY ./msvc-usuarios/src ./src
+COPY ./$MSVC_NAME/src ./src
 RUN ./mvnw clean package -DskipTests
 
 
@@ -31,6 +38,10 @@ RUN ./mvnw clean package -DskipTests
 #Usamos el patron de diseno builder que es tener la primera instalacion del jdk y la usamos nuevamente
 #Aqui se llama nuevamente para ejecutar
 FROM openjdk:18.0
+
+#declaramos en esta capa la variable de argumento declarada arriba
+ARG MSVC_NAME
+
 WORKDIR /app
 #Al correr  esta segunda imagen del builder, creamos esta carpeta logs en la carpeta de
 #trabajo app
@@ -41,10 +52,12 @@ RUN mkdir ./logs
 #docker cp nombreContenedor:/app/logs .\logs
 
 #copiamos el msvc-usuarios-0.0.1-SNAPSHOT.jar de builder a la nueva capa de openjdk del workdir que es app
-COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
+ARG TARGET_FOLDER=/app/$MSVC_NAME/target
+COPY --from=builder $TARGET_FOLDER/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
 #Seteamos nuestra variable de ambiente con PORT  8000
-ENV PORT 8000
+ARG PORT_APP=8001
+ENV PORT $PORT_APP
 EXPOSE $PORT
 #El msvc-usuarios-0.0.1-SNAPSHOT.jar esta en la raiz, esta en app
 #ENTRYPOINT ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
