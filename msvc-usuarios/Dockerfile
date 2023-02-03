@@ -42,7 +42,10 @@ RUN mkdir ./logs
 
 #copiamos el msvc-usuarios-0.0.1-SNAPSHOT.jar de builder a la nueva capa de openjdk del workdir que es app
 COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
-EXPOSE 8001
+
+#Seteamos nuestra variable de ambiente con PORT  8000
+ENV PORT 8000
+EXPOSE $PORT
 #El msvc-usuarios-0.0.1-SNAPSHOT.jar esta en la raiz, esta en app
 #ENTRYPOINT ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 
@@ -74,8 +77,15 @@ CMD ["java", "-jar" , "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 # Remove unused images
 #docker image prune
 
-#Con rm si logras parar el contenedor, se auto elimina
-#docker run -p 8001:8002 -d --rm usuarios
+#Arrancamos contenedor. Con rm si logras parar el contenedor, se auto elimina
+#docker run -p 8001:8000 -d --rm --name msvc-usuarios --network spring usuarios:latest
+
+#Sobreescribimos la variable de ambiente
+# docker run -p 8001:8090 --env PORT=8090 -d --rm --name msvc-usuarios --network spring usuarios:latest
+# docker run -p 8001:8090 -e PORT=8090 -d --rm --name msvc-usuarios --network spring usuarios:latest
+
+#Sobreescribiendo variables de ambiente usando archivos
+# docker run -p 8001:8001 --env-file ./msvc-usuarios/.env -d --rm --name msvc-usuarios --network spring usuarios:latest
 
 #Ejecutar algo en la shell del contenedor apenas se crea
 #docker run -p 8001:8002 -d --rm usuarios -it /bin/sh
