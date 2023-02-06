@@ -42,11 +42,12 @@ services:
   msvc-usuarios:
     # Con este container_name, obligamos que el nombre se llame exactamente igual sin colocar un prefijo por default
     container_name: msvc-usuarios
+    image: saymonset/usuarios:latest
     #Construimos la imagen con el Dockerfile que construimos manualmente
-    build:
-      # El contexto es el lugar de partida, donde se copian los archivos etc
-      context: ./
-      dockerfile: ./msvc-usuarios/Dockerfile
+#    build:
+#      # El contexto es el lugar de partida, donde se copian los archivos etc
+#      context: ./
+#      dockerfile: ./msvc-usuarios/Dockerfile
     ports:
       - "8001:8001"
     env_file: ./msvc-usuarios/.env
@@ -59,10 +60,11 @@ services:
   msvc-cursos:
     # Con este container_name, obligamos que el nombre se llame exactamente igual sin colocar un prefijo por default
     container_name: msvc-cursos
-    build:
-      # El contexto es el lugar de partida, donde se copian los archivos etc
-      context: ./
-      dockerfile: ./msvc-cursos/Dockerfile
+    image: saymonset/cursos:latest
+#    build:
+#      # El contexto es el lugar de partida, donde se copian los archivos etc
+#      context: ./
+#      dockerfile: ./msvc-cursos/Dockerfile
     ports:
       - "8002:8002"
     env_file:
