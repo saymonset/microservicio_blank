@@ -19,6 +19,9 @@
 #Remove all containers
 # docker rm $(docker ps -a -q)
 
+#Elimina todos los contenedores
+#docker container prune#
+
 # docker inspect main_mysql_ecolo_container_1
 # docker volume ls
 
