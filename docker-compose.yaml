@@ -3,6 +3,11 @@
 
 # docker-compose up --help
 
+#Docker hub
+#Creamos un nombre exavto a lo que ncsitamos en docker hub para subir la imagen
+#docker tag microservicio_blank_msvc-usuarios saymonset/usuarios
+#docker push  saymonset/usuarios
+
 version: "3.9"
 services:
   mysql8:
