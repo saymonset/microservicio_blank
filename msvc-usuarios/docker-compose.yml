@@ -75,6 +75,10 @@ services:
 #    cap_add:
 #      - IPC_LOCK
 #    restart: unless-stopped
+
+#Dos espacios siempore de identacion
+
+  # mysql_ecolo_container es el nombre del contenedor o host para comunicarse con la bd
   mysql_ecolo_container:
       image: mysql
       restart: always
@@ -97,15 +101,19 @@ services:
         # We're using a named volume here that docker manages for us.  This is a special
     # place just for this particular dockerized MySQL instance.
       volumes:
-      - mysql-datavolume:/var/lib/mysql
-      networks: 
+        - mysql-datavolume:/var/lib/mysql
+      networks:
+     #Usamos la red definida abajo llamada:  app_net
         app_net:
           ipv4_address: 172.16.238.11
-# if you use a named volume, you must also define it here.
+#Definimos los volumenes para usarlos arriba
 volumes:  
   mysql-datavolume:
   # devmongo:
+
+#Configuramos la red
 networks:
+#Definios el nombre de red llamado :   app_net
   app_net:
     ipam:
       driver: default

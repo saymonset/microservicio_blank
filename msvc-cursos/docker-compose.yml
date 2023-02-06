@@ -55,6 +55,7 @@
 #grep -R "saymon1_1.0.0-SNAPSHOT" wildfly/
 version: '2'
 services:
+  # pg es el nombre del contenedor o host para comunicarse con la bd
   pg:
     image: postgres:latest
     volumes:
