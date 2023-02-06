@@ -60,10 +60,14 @@ CMD ["java", "-jar" , "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 # docker run -p 8002:8001 image#
 #docker st
 
-#Con este comando, copiamos el pom.xml de la raiz y el mcsv-cursos con su pom.xml t mvnw para compilarlos internamente en docker
+#IMAGEN CREAMOS. Con este comando, copiamos el pom.xml de la raiz y el mcsv-cursos con su pom.xml t mvnw para compilarlos internamente en docker
 #el -t es tag que es etiquetar
-# docker build -t cursos . -f ./msvc-cursos/Dockerfile
 # docker build -t cursos:latest . -f ./msvc-cursos/Dockerfile
+
+#Creamos el; microservicio
+# docker run -p 8002:8002 --env-file ./msvc-cursos/.env -d --rm --name msvc-cursos --network spring cursos:latest
+
+
 # prune       Remove all stopped containers
 #Docker container prune
 #docker container --help
@@ -112,5 +116,4 @@ CMD ["java", "-jar" , "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 #\dt
 #\d+   Describe una table
 
-#Creamos el; microservicio
-#docker run -p 8002:8002 -d --rm --name msvc-cursos --network spring cursos:latest
+

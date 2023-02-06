@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 //        #1.2-) y se vuelve a generar el compilado con mvn de esta manera
 //        #1.3-) ./mvnw clean package -DskipTests
 //Este es el nombre del contenedor que es el mismo nombre de red para cominicarnos
-@FeignClient(name = "msvc-cursos",url = "msvc-cursos:8002")
+//@FeignClient(name = "msvc-cursos",url = "msvc-cursos:8002")
+@FeignClient(name="msvc-cursos", url = "${msvc.cursos.url}")
 public interface CursoClienteRest {
     @DeleteMapping("/eliminar-usuariofrom/{id}")
     void eliminarUsuario(@PathVariable Long id);
