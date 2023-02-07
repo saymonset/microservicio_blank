@@ -35,6 +35,10 @@
 #
 #  sudo ln /usr/local/bin/docker-compose /usr/bin/docker-compose
 
+
+#Copiar el .yaml a la maquina aws ec2 de amazon
+#scp -i "lorenzo-mac.pem" docker-compose.yaml ec2-user@ec2-100-25-4-194.compute-1.amazonaws.com:/home/ec2-user
+
 version: "3.9"
 services:
   mysql8:
