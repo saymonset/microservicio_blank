@@ -3,6 +3,8 @@ package org.aguzman.springcloud.msvc.usuarios.controllers;
 import org.aguzman.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.aguzman.springcloud.msvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,90 +15,92 @@ import java.util.*;
 
 @RestController
 public class UsuarioController {
-    @Autowired
-    private UsuarioService s;
 
-    @GetMapping("/")
-    public List<Usuario> listar(){
-        return this.s.listar();
+    @Autowired
+    private UsuarioService service;
+
+    @Autowired
+    private ApplicationContext context;
+
+    @GetMapping("/crash")
+    public void crash() {
+        ((ConfigurableApplicationContext)context).close();
+    }
+
+    @GetMapping
+    public Map<String, List<Usuario>> listar() {
+        return Collections.singletonMap("users", service.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> detalle(@PathVariable Long id){
-//        ctrl + alt + v  -> es atajo en itellijidea
-        Optional<Usuario> usuario = this.s.porId(id);
-        if (usuario.isPresent()){
-           return ResponseEntity.ok().body(usuario);
+    public ResponseEntity<?> detalle(@PathVariable Long id) {
+        Optional<Usuario> usuarioOptional = service.porId(id);
+        if (usuarioOptional.isPresent()) {
+            return ResponseEntity.ok(usuarioOptional.get());
         }
         return ResponseEntity.notFound().build();
     }
-    @PostMapping
-    public ResponseEntity<?> crear  (@Valid @RequestBody Usuario usuario, BindingResult result){
 
-        if (result.hasErrors()){
+    @PostMapping
+    public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
+
+        if (result.hasErrors()) {
             return validar(result);
         }
-        if (!usuario.getEmail().isEmpty() && this.s.existByEmail(usuario.getEmail())){
-            return  ResponseEntity.badRequest()
+
+        if (!usuario.getEmail().isEmpty() && service.existePorEmail(usuario.getEmail())) {
+            return ResponseEntity.badRequest()
                     .body(Collections
-                            .singletonMap("mensaje","Ya existe un usuarios con ese correo electronico"));
+                            .singletonMap("mensaje", "Ya existe! un usuario con ese email electrónico!"));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.s.guardar(usuario));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable(name = "id") Long id){
+    public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
 
-
-
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return validar(result);
         }
-        Optional<Usuario> o = this.s.porId(id);
-        if (o.isPresent()){
 
+        Optional<Usuario> o = service.porId(id);
+        if (o.isPresent()) {
+            Usuario usuarioDb = o.get();
             if (!usuario.getEmail().isEmpty() &&
-                    !usuario.getEmail().equalsIgnoreCase(o.get().getEmail()) &&
-                    this.s.findByEmail(usuario.getEmail()).isPresent()){
-                return  ResponseEntity.badRequest()
+                    !usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) &&
+                    service.porEmail(usuario.getEmail()).isPresent()) {
+                return ResponseEntity.badRequest()
                         .body(Collections
-                                .singletonMap("mensaje","Ya existe un usuarios con ese correo electronico"));
+                                .singletonMap("mensaje", "Ya existe un usuario con ese correo electronico!"));
             }
 
-            Usuario usuarioDb = o.get();
             usuarioDb.setNombre(usuario.getNombre());
             usuarioDb.setEmail(usuario.getEmail());
             usuarioDb.setPassword(usuario.getPassword());
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.s.guardar(usuarioDb));
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuarioDb));
         }
-       return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") Long id){
-        Optional<Usuario> o = this.s.porId(id);
-        if (o.isPresent()){
-            this.s.eliminar(id);
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        Optional<Usuario> o = service.porId(id);
+        if (o.isPresent()) {
+            service.eliminar(id);
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
-
     @GetMapping("/usuarios-por-curso")
-    //Si fuera por @RequestBody el json que llega del cliente, debe ser enviado tipo post
-    //Si es con el erbo tipo @Get, debes pasar los datos por @RequestParam
-    public ResponseEntity<?> alumnsPorCurso(@RequestParam List<Long> ids){
-        return ResponseEntity.ok(this.s.listarPorIds(ids));
-
+    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids){
+        return ResponseEntity.ok(service.listarPorIds(ids));
     }
 
-//    Se mueve el bloque con
-    //ctrl + shift + flecha
-    private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
+    private ResponseEntity<Map<String, String>> validar(BindingResult result) {
         Map<String, String> errores = new HashMap<>();
-        result.getFieldErrors().forEach(e ->{
-            errores.put(e.getField(), "El campo " + e.getField() + " " + e.getDefaultMessage());
+        result.getFieldErrors().forEach(err -> {
+            errores.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
         });
         return ResponseEntity.badRequest().body(errores);
     }

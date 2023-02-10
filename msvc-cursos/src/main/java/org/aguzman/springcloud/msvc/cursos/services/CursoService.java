@@ -11,16 +11,11 @@ public interface CursoService {
     Optional<Curso> porId(Long id);
     Optional<Curso> porIdConUsuarios(Long id);
     Curso guardar(Curso curso);
-    void  eliminar(Long id);
+    void eliminar(Long id);
 
     void eliminarCursoUsuarioPorId(Long id);
 
-//  Esta logica de negocio se obtiene de datos de otro servico
-
- Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId);
- Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId);
- Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId);
-
-
-
+    Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId);
+    Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId);
+    Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId);
 }

@@ -1,12 +1,6 @@
 package org.aguzman.springcloud.msvc.cursos.models;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import java.io.Serial;
-import java.io.Serializable;
-
-public class Usuario implements Serializable {
+public class Usuario {
     private Long id;
 
     private String nombre;
@@ -16,7 +10,7 @@ public class Usuario implements Serializable {
     private String password;
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -24,7 +18,7 @@ public class Usuario implements Serializable {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -32,7 +26,7 @@ public class Usuario implements Serializable {
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -40,7 +34,7 @@ public class Usuario implements Serializable {
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public void setPassword(String password) {

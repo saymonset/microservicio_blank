@@ -1,29 +1,29 @@
 package org.aguzman.springcloud.msvc.usuarios.models.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name="usuarios")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nombre")
-    @NotBlank(message = "no.puede.ser.vacio")
+
+    @NotBlank
     private String nombre;
 
-    @Email(message = "email.errado")
+    @NotEmpty
+    @Email
     @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "no.puede.ser.vacio")
+    @NotBlank
     private String password;
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -31,7 +31,7 @@ public class Usuario {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -39,7 +39,7 @@ public class Usuario {
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -47,7 +47,7 @@ public class Usuario {
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public void setPassword(String password) {

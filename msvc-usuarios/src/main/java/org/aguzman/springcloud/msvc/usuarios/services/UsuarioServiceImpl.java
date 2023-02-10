@@ -17,52 +17,46 @@ public class UsuarioServiceImpl implements UsuarioService{
     private UsuarioRepository repository;
 
     @Autowired
-    private CursoClienteRest cliente;
+    private CursoClienteRest client;
 
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> listar() {
-        return (List<Usuario>) this.repository.findAll();
+        return (List<Usuario>) repository.findAll();
     }
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public Optional<Usuario> porId(Long id) {
-        return this.repository.findById(id);
+        return repository.findById(id);
     }
+
     @Override
     @Transactional
     public Usuario guardar(Usuario usuario) {
-        return this.repository.save(usuario);
+        return repository.save(usuario);
     }
 
     @Override
-  //  @Transactional
+    @Transactional
     public void eliminar(Long id) {
-        Optional<Usuario> u = porId( id);
-        if (u.isPresent()){
-            this.repository.delete(u.get());
-            this.cliente.eliminarUsuario(id);
-        }
-
+        repository.deleteById(id);
+        client.eliminarCursoUsuarioPorId(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> listarPorIds(Iterable<Long> ids) {
-        return (List<Usuario>) this.repository.findAllById(ids);
+        return (List<Usuario>) repository.findAllById(ids);
     }
 
     @Override
-    public Optional<Usuario> findByEmail(String email) {
-        //Nombre del metodo
-        //return this.repository.findByEmail(email);
-        //Por @Query
-        return this.repository.porEmail(email);
+    public Optional<Usuario> porEmail(String email) {
+        return repository.porEmail(email);
     }
 
     @Override
-    public boolean existByEmail(String email) {
-        return this.repository.existsByEmail(email);
+    public boolean existePorEmail(String email) {
+        return repository.existsByEmail(email);
     }
 }
