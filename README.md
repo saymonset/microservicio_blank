@@ -44,8 +44,7 @@ kubectl describe pods nombre_del_pod
 kubectl delete deployment mysql8
 
 kubectl logs pods nombre_del_pod
-
-<<<<<<< Updated upstream
+ 
 # Forma delarativa
 kubectl apply -f ./deployment-mysql.yaml
 kubectl get pods
@@ -96,10 +95,11 @@ kubectl  set image deployment msvc-usuarios usuarios=saymonset/usuarios:latest
 
 # Colocar varias replicas de un container
 kubectl scale deployment msvc-usuarios --replicas=3
-=======
+ 
 # Generamos nuestro archivo yaml
  kubectl get service mysql8 -o yaml > svc-mysql8.yaml
 
+ 
 kubectl create deployment msvc-usuarios --image=saymonset/usuarios:latest --port=8001 --dry-run=cient -o yaml > deployment-usuarios.yaml
 kubectl get service msvc-usuarios -o yaml > svc-usuarios.yaml
 
@@ -111,4 +111,4 @@ kubectl apply -f ./deployment-usuarios.yaml
 
 # Interface grafica para administrar nuestros pods en web
 minikube dashboard
->>>>>>> Stashed changes
+ 
