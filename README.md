@@ -111,4 +111,10 @@ kubectl apply -f ./deployment-usuarios.yaml
 
 # Interface grafica para administrar nuestros pods en web
 minikube dashboard
- 
+
+# Base 64, convertrir 
+
+  Seccion 16 -> 153
+  https://www.base64encode.org/
+
+Gui-completa-de-docker-kubernetes-con-spring-boot
