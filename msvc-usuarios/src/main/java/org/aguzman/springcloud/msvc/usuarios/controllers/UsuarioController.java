@@ -85,8 +85,8 @@ public class UsuarioController {
 
     @GetMapping("/usuarios-por-curso")
     //Si fuera por @RequestBody el json que llega del cliente, debe ser enviado tipo post
-    //Si es con el erbo tipo @Get, debes pasar los datos por @RequestParam
-    public ResponseEntity<?> alumnsPorCurso(@RequestParam List<Long> ids){
+    //Si es con el verbo tipo @Get, debes pasar los datos por @RequestParam
+    public ResponseEntity<?> alumnosPorCurso(@RequestParam List<Long> ids){
         return ResponseEntity.ok(this.s.listarPorIds(ids));
 
     }
