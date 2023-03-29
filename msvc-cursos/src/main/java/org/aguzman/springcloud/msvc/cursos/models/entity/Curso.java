@@ -26,7 +26,9 @@ public class Curso {
     private List<Usuario> usuarios;
 
     public Curso(){
+
         this.cursoUsuarios = new ArrayList<>();
+        this.usuarios = new ArrayList<>();
     }
     public String getNombre() {
         return this.nombre;

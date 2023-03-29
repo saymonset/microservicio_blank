@@ -2,7 +2,7 @@
 #Los argumentos se usan para la construccion de la imagen
 ARG MSVC_NAME=msvc-usuarios
 
-#Esta imagen de java debe ser  la misma version que se tiene instalada en la mauina y enb el ide
+#Esta imagen de java debe ser  la misma version que se tiene instalada en la maquina y en el ide
 #Usamos el patron de diseno builder que es tener la primera instalarcion del jdk y la usamos nuevamente mas
 #abajo llamandola nuevamente pero solo para ejecutar
 FROM openjdk:18.0 as builder

@@ -127,6 +127,8 @@ public class CursoController {
         this.s.eliminarCursoUsuarioPorId(id);
         return ResponseEntity.noContent().build();
     }
+
+
     private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
         Map<String, String> errores = new HashMap<>();
         result.getFieldErrors().forEach(e ->{
