@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: msvc-mongousuarios
+  name: msvc-mongousuarios
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msvc-mongousuarios
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: msvc-mongousuarios
+    spec:
+      containers:
+      - image: saymonset/usuariosmongo:latest
+        name: usuariosmongo
+        ports:
+        - containerPort: 8003
+        resources: {}
+status: {}

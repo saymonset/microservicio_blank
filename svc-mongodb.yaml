@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2023-04-07T12:40:29Z"
+  labels:
+    app: mongodb
+  name: mongodb
+  namespace: default
+  resourceVersion: "573965"
+  uid: 15426d09-3c6b-4892-8d53-8c0195ab293e
+spec:
+  clusterIP: 10.100.226.213
+  clusterIPs:
+  - 10.100.226.213
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: mongodb
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

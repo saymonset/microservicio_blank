@@ -4,6 +4,8 @@ package org.aguzman.springcloud.msvc.msvcmongousuarios.controllers;
 import org.aguzman.springcloud.msvc.msvcmongousuarios.models.entity.Usuario;
 import org.aguzman.springcloud.msvc.msvcmongousuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,15 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService s;
+
+    @Autowired
+    private ApplicationContext context;
+
+
+    @GetMapping("/crash")
+    public void crash(){
+        ((ConfigurableApplicationContext) this.context).close();
+    }
 
 
     @GetMapping("/")
