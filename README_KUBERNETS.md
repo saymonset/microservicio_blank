@@ -11,6 +11,9 @@ kubectl delete deployment mysql8
 kubectl create deployment mongoDB --image=mongo:latest --port=27017 --dry-run=client -o yaml > deployment-node.yaml
 kubectl create deployment msvc-usuarios --image=aguzf/usuarios:latest --port=8001
 
+# Otra forma de crear el deployment de forma declarativa
+kubectl apply -f ./deployment-mongousuarios.yaml
+
 # Obtenemos url de minikube
 minikube service msvc-mongousuarios --url
 
@@ -25,11 +28,23 @@ kubectl expose deployment mysql8 --port=3306 --type=ClusterIP
 kubectl expose deployment msvc-usuarios --port=8003 --type=LoadBalancer 
 kubectl get services
 kubectl describe service mysql8
+kubectl describe service msvc-mongousuarios
+
+# Dashboar de minukube
+  minikube dashboard
+
 
 # Seccion 14->138. Creamos archivos yaml de deployment y servicios
 # Sacamos el servicio con formato yaml
 kubectl get service mongodb -o yaml > svc-mongodb.yaml
 kubectl get service msvc-mongousuarios -o yaml > msvc-mongousuarios.yaml
+
+# Borramos deployments
+kubectl delete deployment msvc-mongousuarios
+
+# Borramos deployments de forma declarativa
+kubectl delete -f ./deployment-mongousuarios.yaml
+
 
 # sacamos el deployment en formato yaml y se hacen las replicas siempre manejando ese archivo. En la imagen si se 
 # coloca a latest, siempre cargara la ultima imagen
@@ -48,6 +63,10 @@ kubectl set image deployment msvc-mongousuarios usuariosmongo=saymonset/usuarios
 
 # Seccion 14->137. Aumentramos replicas de los pods
 kubectl scale deployment msvc-mongousuarios --replicas=4
+
+# Volumenes PersistenVolumeClaim
+   kubectl apply -f ./mysql-pv.yaml
+
 
 
 

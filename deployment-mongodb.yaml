@@ -26,4 +26,11 @@ spec:
         env:
           - name: saymon
             value: sasasimons
-status: {}
+        volumeMounts:
+          - name: data-mongo
+            mountPath: /data/db
+      volumes:
+        - name: data-mongo
+          hostPath:
+            path: /data/db
+            type: DirectoryOrCreate
