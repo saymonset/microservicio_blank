@@ -65,9 +65,11 @@ kubectl set image deployment msvc-mongousuarios usuariosmongo=saymonset/usuarios
 kubectl scale deployment msvc-mongousuarios --replicas=4
 
 # Volumenes PersistenVolumeClaim
-   kubectl apply -f ./mysql-pv.yaml
-
-
+   kubectl apply -f ./mongo-pv.yaml
+   kubectl apply -f ./mongo-pvc.yaml
+   kubectl get pv
+   kubectl get pv
+   kubectl apply -f ./deployment-mongodb.yaml 
 
 
 
