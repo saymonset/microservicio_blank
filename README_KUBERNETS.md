@@ -72,6 +72,8 @@ kubectl scale deployment msvc-mongousuarios --replicas=4
    kubectl apply -f ./deployment-mongodb.yaml 
 # Configurando variables de ambiente de manera global
 kubectl get configmap
+kubectl apply -f ./configmap.yaml
+
 
 # Ejecutar un comando para permisos de  Spring-cload-client en kubernetes 
 kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
