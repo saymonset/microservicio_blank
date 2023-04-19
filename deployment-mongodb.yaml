@@ -24,8 +24,21 @@ spec:
         - containerPort: 27017
         resources: {}
         env:
-          - name: saymon
-            value: sasasimons
+          - name: SAYMON_HOST_TO_SHOW_IN_APPLICATION
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-mongousuarios
+                key: db_host
+          - name: USERNAME_ENV
+            valueFrom:
+              secretKeyRef:
+                name: msvc-mongousuarios
+                key: username
+          - name: PASSWORD_ENV
+            valueFrom:
+              secretKeyRef:
+                name: msvc-mongousuarios
+                key: password
         volumeMounts:
           - name: data-mongo
             mountPath: /data/db

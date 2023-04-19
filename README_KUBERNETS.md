@@ -77,3 +77,6 @@ kubectl apply -f ./configmap.yaml
 
 # Ejecutar un comando para permisos de  Spring-cload-client en kubernetes 
 kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
+
+# Aplicamos secret
+kubectl apply -f ./secret.yaml 
