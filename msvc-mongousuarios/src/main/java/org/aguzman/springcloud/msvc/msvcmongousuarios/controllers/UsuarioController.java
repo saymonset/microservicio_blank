@@ -3,9 +3,11 @@ package org.aguzman.springcloud.msvc.msvcmongousuarios.controllers;
 
 import org.aguzman.springcloud.msvc.msvcmongousuarios.models.entity.Usuario;
 import org.aguzman.springcloud.msvc.msvcmongousuarios.services.UsuarioService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,8 @@ public class UsuarioController {
     @Autowired
     private ApplicationContext context;
 
+   @Autowired
+   private Environment env;
 
     @GetMapping("/crash")
     public void crash(){
@@ -38,9 +42,13 @@ public class UsuarioController {
 
     @GetMapping("/")
     public ResponseEntity<?> listar(){
+        Map<String, Object> body = new HashMap<>();
+        body.put("users", this.s.listar());
+        body.put("podinfo", this.env.getProperty("MY_POD_NAME") +  ":" + this.env.getProperty("MY_POD_IP"));
+        body.put("texto", this.env.getProperty("config.texto"));
         Usuario user = new Usuario();
         user.setEmail("saymon_set@HOTMAIL.COM");
-        return ResponseEntity.ok(this.s.listar());
+        return ResponseEntity.ok(body);
         //return this.s.listar();
     }
 

@@ -44,7 +44,10 @@ kubectl delete deployment msvc-mongousuarios
 
 # Borramos deployments de forma declarativa
 kubectl delete -f ./deployment-mongousuarios.yaml
+kubectl apply -f ./deployment-mongousuarios.yaml
 
+# Configuracion con yaml para crear nuevas variables de ambiente para el proyecto
+kubectl apply -f ./configmap.yaml
 
 # sacamos el deployment en formato yaml y se hacen las replicas siempre manejando ese archivo. En la imagen si se 
 # coloca a latest, siempre cargara la ultima imagen

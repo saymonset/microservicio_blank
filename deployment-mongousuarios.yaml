@@ -6,7 +6,7 @@ metadata:
     app: msvc-mongousuarios
   name: msvc-mongousuarios
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: msvc-mongousuarios
@@ -23,4 +23,15 @@ spec:
         ports:
         - containerPort: 8003
         resources: {}
+        env:
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+
+
 status: {}
