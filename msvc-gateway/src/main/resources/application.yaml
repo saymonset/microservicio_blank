@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    routes:
+      - id: msvc-mongousuarios
+        uri: lb://msvc-mongousuarios
+        predicates:
+          - Path=/api/usuariosm/**
+        filters:
+          - StripPrefix=2
+
