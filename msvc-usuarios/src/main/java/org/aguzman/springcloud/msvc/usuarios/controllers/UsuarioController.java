@@ -24,6 +24,7 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id){
 //        ctrl + alt + v  -> es atajo en itellijidea
+
         Optional<Usuario> usuario = this.s.porId(id);
         if (usuario.isPresent()){
            return ResponseEntity.ok().body(usuario);
