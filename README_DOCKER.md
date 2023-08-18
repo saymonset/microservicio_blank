@@ -41,7 +41,7 @@ psql -Upostgres
 \c
 \dt
 \d+
-mysql -Uroot -psasa
+mysql -uroot -psasa
 show database
 use database
 
