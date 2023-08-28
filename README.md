@@ -2,6 +2,14 @@ Deployment: Objeto administra los pods a traves de nosotros. Los crea y asi no l
  del deployment con la herramienta de kuberntes.
  Maneja, administra los pods.
 
+
+# Docker
+  Docker build -t usuarios . -f /mscv-usuarios/Dockerfile
+
+  RUN  chmod +x mvnw
+
+docker tag usuarios saymonset/usuarios
+  
 # Chequear
 minikube status
 
