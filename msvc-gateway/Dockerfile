@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11 as builder
+FROM openjdk as builder
 
 WORKDIR /app/msvc-gateway
 
@@ -14,7 +14,7 @@ COPY ./msvc-gateway/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
-FROM adoptopenjdk/openjdk11
+FROM openjdk
 
 WORKDIR /app
 RUN mkdir ./logs

@@ -2,6 +2,10 @@ Deployment: Objeto administra los pods a traves de nosotros. Los crea y asi no l
  del deployment con la herramienta de kuberntes.
  Maneja, administra los pods.
 
+# Entrar al bash de mysql de un pod
+kubectl exec mysql8-7fdc978c6b-847zb bash
+mysql -uroot -psasa
+
 
 # Docker
   Docker build -t usuarios . -f /mscv-usuarios/Dockerfile
@@ -50,6 +54,12 @@ kubectl describe pods nombre_del_pod
 
 # Eliminar un recurso
 kubectl delete deployment mysql8
+
+# Elimina un pods
+
+kubectl delete pods mysql8
+
+
 
 kubectl logs pods nombre_del_pod
  

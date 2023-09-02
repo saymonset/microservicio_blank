@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11 as builder
+FROM openjdk:20-slim-bullseye  as builder
 
 WORKDIR /app/msvc-cursos
 
@@ -14,7 +14,7 @@ COPY ./msvc-cursos/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
-FROM adoptopenjdk/openjdk11
+FROM openjdk:20-slim-bullseye
 
 WORKDIR /app
 RUN mkdir ./logs

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: msvc-auth
-          image: aguzf/auth:latest
+          image: saymonset/auth:latest
           ports:
             - containerPort: 9000
           env:

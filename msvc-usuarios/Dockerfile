@@ -1,6 +1,6 @@
 ARG MSVC_NAME=msvc-usuarios
 
-FROM adoptopenjdk/openjdk11 as builder
+FROM openjdk:20-slim-bullseye as builder
 
 ARG MSVC_NAME
 
@@ -12,14 +12,14 @@ COPY ./$MSVC_NAME/mvnw .
 COPY ./$MSVC_NAME/pom.xml .
 
 RUN chmod +x mvnw
-
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 #RUN ./mvnw dependency:go-offline
 COPY ./$MSVC_NAME/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
-FROM adoptopenjdk/openjdk11
+FROM openjdk:20-slim-bullseye
+
 
 ARG MSVC_NAME
 
