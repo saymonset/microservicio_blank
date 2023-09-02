@@ -1,5 +1,7 @@
 # Entrar al bash de mysql de un pod
 kubectl exec mysql8-7fdc978c6b-847zb bash
+
+# Entramos a mysql
  mysql -uroot -psasa
 
 # microservicio_blank
