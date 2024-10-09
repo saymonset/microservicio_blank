@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cursos
-          image: aguzf/cursos:latest
+          image: saymonset/cursos:latest
           ports:
             - containerPort: 8002
           env:
