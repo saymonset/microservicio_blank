@@ -56,7 +56,7 @@ kubectl logs nombre_del_pods
 
 
 # Creamos un servicio para comunicarnos con los pods. Es como una ip unica para todos
- kubectl expose deployment mysql8 --port=3306 --type=ClusterIp
+ kubectl expose deployment mysql8 --port=3306 --type=ClusterIP
  kubectl expose deployment mysql8 --port=3306 --type=NodePort
  kubectl expose deployment mysql8 --port=3306 --type=LoadBalancer
 
@@ -100,7 +100,7 @@ kubectl scale deployment msvc-usuarios --replicas=3
  kubectl get service mysql8 -o yaml > svc-mysql8.yaml
 
  
-kubectl create deployment msvc-usuarios --image=saymonset/usuarios:latest --port=8001 --dry-run=cient -o yaml > deployment-usuarios.yaml
+kubectl create deployment msvc-usuarios --image=saymonset/usuarios:latest --port=8001 --dry-run=client -o yaml > deployment-usuarios.yaml
 kubectl get service msvc-usuarios -o yaml > svc-usuarios.yaml
 
 # Eliminar un deployment
