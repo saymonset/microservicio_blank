@@ -28,5 +28,5 @@ spec:
       volumes:
         - name: data-postgres
           hostPath:
-            u
+            path: /postgresql/data
             type: DirectoryOrCreate          
