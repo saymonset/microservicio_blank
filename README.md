@@ -122,3 +122,6 @@ Gui-completa-de-docker-kubernetes-con-spring-boot
 kubectl get sc
 kubectl get pv
 kubectl get pvc
+
+#Configuracion centralizada
+  kubectl apply -f ./configmap.yaml
