@@ -118,3 +118,7 @@ minikube dashboard
   https://www.base64encode.org/
 
 Gui-completa-de-docker-kubernetes-con-spring-boot
+
+kubectl get sc
+kubectl get pv
+kubectl get pvc

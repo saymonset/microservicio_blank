@@ -27,6 +27,5 @@ spec:
               mountPath: /postgresql/data
       volumes:
         - name: data-postgres
-          hostPath:
-            path: /postgresql/data
-            type: DirectoryOrCreate          
+          persistentVolumeClaim:
+            claimName: postgres-pvc       
