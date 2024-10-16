@@ -125,3 +125,6 @@ kubectl get pvc
 
 #Configuracion centralizada
   kubectl apply -f ./configmap.yaml
+#Darle permisos a kubernetes de spring cloud y viceversa
+ kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
+
