@@ -1,5 +1,6 @@
 #FROM openjdk:17-jdk-alpine as builder
-FROM eclipse-temurin:17 as builder
+#FROM eclipse-temurin:17 as builder
+FROM openjdk:24-ea-19-jdk-bullseye as builder
 #FROM adoptopenjdk/openjdk11 as builder
 WORKDIR /app/msvc-gateway
 
@@ -16,7 +17,7 @@ COPY ./msvc-gateway/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:17
+FROM openjdk:24-ea-19-jdk-bullseye
 
 WORKDIR /app
 RUN mkdir ./logs

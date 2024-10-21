@@ -1,5 +1,6 @@
 #ROM openjdk:17-jdk-alpine as builder
-FROM adoptopenjdk/openjdk11 as builder
+#FROM adoptopenjdk/openjdk11 as builder
+FROM openjdk:24-ea-19-jdk-bullseye as builder
 WORKDIR /app/msvc-cursos
 
 COPY ./pom.xml /app
@@ -16,7 +17,7 @@ COPY ./msvc-cursos/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
-FROM adoptopenjdk/openjdk11
+FROM openjdk:24-ea-19-jdk-bullseye
 
 WORKDIR /app
 RUN mkdir ./logs

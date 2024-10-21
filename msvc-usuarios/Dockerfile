@@ -1,6 +1,8 @@
 ARG MSVC_NAME=msvc-usuarios
 
-FROM adoptopenjdk/openjdk11 as builder
+#FROM adoptopenjdk/openjdk11 as builder
+FROM openjdk:24-ea-19-jdk-bullseye as builder
+
 
  
 
@@ -21,7 +23,7 @@ COPY ./$MSVC_NAME/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
-FROM adoptopenjdk/openjdk11
+FROM openjdk:24-ea-19-jdk-bullseye
 
 ARG MSVC_NAME
 

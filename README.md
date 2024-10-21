@@ -128,3 +128,41 @@ kubectl get pvc
 #Darle permisos a kubernetes de spring cloud y viceversa
  kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
 
+
+# Con arquitectura amd64 y arm64
+# Primero se crea esto
+docker buildx create --use
+Luego se empieza a crear la imagen con diferente arquitecturas
+docker buildx build --platform linux/amd64,linux/arm64  -t gateway . -f ./msvc-gateway/Dockerfile 
+
+#kubernte en aws
+
+aws configure
+aws eks --region us-east-1 update-kubeconfig --name [k8s-saymon]
+aws eks --region us-east-1 update-kubeconfig --name k8s-saymoon
+#Darle permisos a kubernetes de spring cloud y viceversa
+ kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
+
+ #Instalar para los volumenes con csi esto:
+ https://github.com/kubernetes-sigs/aws-efs-csi-driver
+
+1-) Add the Helm repo.
+ helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+
+ 2-) Update the repo.
+  helm repo update aws-efs-csi-driver
+
+  3-) Install a release of the driver using the Helm chart.
+  helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver
+
+
+# correr todo
+ kubectl apply -f ./configmap.yaml -f ./secret.yaml 
+ kubectl apply -f ./mysql-pv.yaml -f ./mysql-pvc.yaml -f ./postgres-pv.yaml -f ./postgres-pvc.yaml 
+ kubectl apply -f ./deployment-mysql.yaml -f ./deployment-postgres.yaml
+  kubectl apply -f ./svc-mysql.yaml -f ./svc-postgres.yaml
+  kubectl apply -f ./deployment-usuarios.yaml -f ./deployment-cursos.yaml
+  kubectl apply -f ./svc-cursos.yaml -f ./svc-usuarios.yaml
+  kubectl apply -f ./gateway.yaml 
+
+
